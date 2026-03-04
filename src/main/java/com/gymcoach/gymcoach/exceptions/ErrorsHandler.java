@@ -1,7 +1,8 @@
 package com.gymcoach.gymcoach.exceptions;
 
-import kevinquarta.s7l5.payloads.ErrorsDTO;
-import kevinquarta.s7l5.payloads.ErrorsWithListDTO;
+
+import com.gymcoach.gymcoach.dto.ErrorsDTO;
+import com.gymcoach.gymcoach.dto.ErrorsWithListDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
