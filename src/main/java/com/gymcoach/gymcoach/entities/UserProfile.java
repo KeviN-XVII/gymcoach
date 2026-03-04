@@ -25,16 +25,19 @@ public class UserProfile {
 
     private int age;
 
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-    private String goal;
+    @Enumerated(EnumType.STRING)
+    private Goal goal;
 
-    private String level;
+    @Enumerated(EnumType.STRING)
+    private Level level;
 
     @Column(name = "weekly_frequency")
     private int weeklyFrequency;
 
-    public UserProfile(User user, double weightKg, double heightCm, String gender, int age, String goal, String level, int weeklyFrequency) {
+    public UserProfile(User user, double weightKg, double heightCm, Gender gender, int age, Goal goal, Level level, int weeklyFrequency) {
         this.user = user;
         this.weightKg = weightKg;
         this.heightCm = heightCm;
@@ -45,73 +48,31 @@ public class UserProfile {
         this.weeklyFrequency = weeklyFrequency;
     }
 
-    public UUID getId() {
-        return id;
-    }
+    public UUID getId() { return id; }
 
-    public User getUser() {
-        return user;
-    }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public double getWeightKg() { return weightKg; }
+    public void setWeightKg(double weightKg) { this.weightKg = weightKg; }
 
-    public double getWeightKg() {
-        return weightKg;
-    }
+    public double getHeightCm() { return heightCm; }
+    public void setHeightCm(double heightCm) { this.heightCm = heightCm; }
 
-    public void setWeightKg(double weightKg) {
-        this.weightKg = weightKg;
-    }
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
 
-    public double getHeightCm() {
-        return heightCm;
-    }
+    public Gender getGender() { return gender; }
+    public void setGender(Gender gender) { this.gender = gender; }
 
-    public void setHeightCm(double heightCm) {
-        this.heightCm = heightCm;
-    }
+    public Goal getGoal() { return goal; }
+    public void setGoal(Goal goal) { this.goal = goal; }
 
-    public int getAge() {
-        return age;
-    }
+    public Level getLevel() { return level; }
+    public void setLevel(Level level) { this.level = level; }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getGoal() {
-        return goal;
-    }
-
-    public void setGoal(String goal) {
-        this.goal = goal;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public int getWeeklyFrequency() {
-        return weeklyFrequency;
-    }
-
-    public void setWeeklyFrequency(int weeklyFrequency) {
-        this.weeklyFrequency = weeklyFrequency;
-    }
+    public int getWeeklyFrequency() { return weeklyFrequency; }
+    public void setWeeklyFrequency(int weeklyFrequency) { this.weeklyFrequency = weeklyFrequency; }
 
     @Override
     public String toString() {
@@ -121,9 +82,9 @@ public class UserProfile {
                 ", weightKg=" + weightKg +
                 ", heightCm=" + heightCm +
                 ", age=" + age +
-                ", gender='" + gender + '\'' +
-                ", goal='" + goal + '\'' +
-                ", level='" + level + '\'' +
+                ", gender=" + gender +
+                ", goal=" + goal +
+                ", level=" + level +
                 ", weeklyFrequency=" + weeklyFrequency +
                 '}';
     }

@@ -25,18 +25,14 @@ public class TrainerProfile {
     @Column(columnDefinition = "TEXT")
     private String certifications;
 
-    @Column(name = "profile_picture")
-    private String profilePicture;
-
     @Column(name = "price_plan")
     private double pricePlan;
 
-    public TrainerProfile(User user, String bio, String specialization, String certifications, String profilePicture, double pricePlan) {
+    public TrainerProfile(User user, String bio, String specialization, String certifications, double pricePlan) {
         this.user = user;
         this.bio = bio;
         this.specialization = specialization;
         this.certifications = certifications;
-        this.profilePicture = profilePicture;
         this.pricePlan = pricePlan;
     }
 
@@ -58,14 +54,6 @@ public class TrainerProfile {
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public String getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
     }
 
     public String getCertifications() {
@@ -100,7 +88,6 @@ public class TrainerProfile {
                 ", bio='" + bio + '\'' +
                 ", specialization='" + specialization + '\'' +
                 ", certifications='" + certifications + '\'' +
-                ", profilePicture='" + profilePicture + '\'' +
                 ", pricePlan=" + pricePlan +
                 '}';
     }

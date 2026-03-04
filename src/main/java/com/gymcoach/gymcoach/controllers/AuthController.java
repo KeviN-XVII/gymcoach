@@ -1,8 +1,9 @@
 package com.gymcoach.gymcoach.controllers;
 
 import com.gymcoach.gymcoach.dto.LoginDTO;
+import com.gymcoach.gymcoach.dto.RegisterTrainerDTO;
+import com.gymcoach.gymcoach.dto.RegisterUserDTO;
 import com.gymcoach.gymcoach.dto.ResponseLoginDTO;
-import com.gymcoach.gymcoach.dto.UserDTO;
 import com.gymcoach.gymcoach.entities.User;
 import com.gymcoach.gymcoach.exceptions.ValidationException;
 import com.gymcoach.gymcoach.services.AuthService;
@@ -31,9 +32,9 @@ public class AuthController {
         return new ResponseLoginDTO(this.authService.CheckCredentialsAndGenerateToken(body));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public User register(@RequestBody @Validated UserDTO payload, BindingResult validationResult) {
+    public User registerUser(@RequestBody @Validated RegisterUserDTO payload, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             List<String> errorsList = validationResult.getFieldErrors()
                     .stream()
@@ -42,5 +43,18 @@ public class AuthController {
             throw new ValidationException(errorsList);
         }
         return userService.saveUser(payload);
+    }
+
+    @PostMapping("/register/trainer")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User registerTrainer(@RequestBody @Validated RegisterTrainerDTO payload, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            List<String> errorsList = validationResult.getFieldErrors()
+                    .stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList();
+            throw new ValidationException(errorsList);
+        }
+        return userService.saveTrainer(payload);
     }
 }
