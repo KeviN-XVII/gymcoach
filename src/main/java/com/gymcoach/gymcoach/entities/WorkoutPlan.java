@@ -1,5 +1,6 @@
 package com.gymcoach.gymcoach.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
@@ -21,9 +22,11 @@ public class WorkoutPlan {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private String goal;
+    @Enumerated(EnumType.STRING)
+    private Goal goal;
 
-    private String level;
+    @Enumerated(EnumType.STRING)
+    private Level level;
 
     @Column(name = "duration_weeks")
     private int durationWeeks;
@@ -50,7 +53,7 @@ public class WorkoutPlan {
 
 
 
-    public WorkoutPlan(String title, String description, String goal, String level, int durationWeeks, double price, boolean aiGenerated, TrainerProfile trainerProfile, User user) {
+    public WorkoutPlan(String title, String description, Goal goal, Level level, int durationWeeks, double price, boolean aiGenerated, TrainerProfile trainerProfile, User user) {
         this.title = title;
         this.description = description;
         this.goal = goal;
@@ -82,19 +85,19 @@ public class WorkoutPlan {
         this.description = description;
     }
 
-    public String getGoal() {
+    public Goal getGoal() {
         return goal;
     }
 
-    public void setGoal(String goal) {
+    public void setGoal(Goal goal) {
         this.goal = goal;
     }
 
-    public String getLevel() {
+    public Level getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Level level) {
         this.level = level;
     }
 
