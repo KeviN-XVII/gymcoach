@@ -1,9 +1,6 @@
 package com.gymcoach.gymcoach.controllers;
 
-import com.gymcoach.gymcoach.dto.LoginDTO;
-import com.gymcoach.gymcoach.dto.RegisterTrainerDTO;
-import com.gymcoach.gymcoach.dto.RegisterUserDTO;
-import com.gymcoach.gymcoach.dto.ResponseLoginDTO;
+import com.gymcoach.gymcoach.dto.*;
 import com.gymcoach.gymcoach.entities.User;
 import com.gymcoach.gymcoach.exceptions.ValidationException;
 import com.gymcoach.gymcoach.services.AuthService;
@@ -34,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/register/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public User registerUser(@RequestBody @Validated RegisterUserDTO payload, BindingResult validationResult) {
+    public UserResponseDTO registerUser(@RequestBody @Validated RegisterUserDTO payload, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             List<String> errorsList = validationResult.getFieldErrors()
                     .stream()
@@ -47,7 +44,7 @@ public class AuthController {
 
     @PostMapping("/register/trainer")
     @ResponseStatus(HttpStatus.CREATED)
-    public User registerTrainer(@RequestBody @Validated RegisterTrainerDTO payload, BindingResult validationResult) {
+    public UserResponseDTO registerTrainer(@RequestBody @Validated RegisterTrainerDTO payload, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             List<String> errorsList = validationResult.getFieldErrors()
                     .stream()

@@ -1,6 +1,7 @@
 package com.gymcoach.gymcoach.controllers;
 
 import com.gymcoach.gymcoach.dto.UserDTO;
+import com.gymcoach.gymcoach.dto.UserResponseDTO;
 import com.gymcoach.gymcoach.entities.User;
 import com.gymcoach.gymcoach.exceptions.ValidationException;
 import com.gymcoach.gymcoach.services.UserService;
@@ -27,13 +28,13 @@ public class UserController {
 
     // GET DATI UTENTE
     @GetMapping("/me")
-    public User getMe(@AuthenticationPrincipal User currentUser) {
-        return userService.findById(currentUser.getId());
+    public UserResponseDTO getMe(@AuthenticationPrincipal User currentUser) {
+        return userService.findByIdAsDTO(currentUser.getId());
     }
 
     // PUT AGGIORNA DATI UTENTE
     @PutMapping("/me")
-    public User updateMe(@AuthenticationPrincipal User currentUser,
+    public UserResponseDTO updateMe(@AuthenticationPrincipal User currentUser,
                          @RequestBody @Validated UserDTO payload,
                          BindingResult validationResult) {
         if (validationResult.hasErrors()) {
@@ -47,7 +48,7 @@ public class UserController {
     }
     // UPLOAD AVATAR
     @PatchMapping("/me/avatar")
-    public User uploadAvatar(@AuthenticationPrincipal User currentUser,
+    public UserResponseDTO uploadAvatar(@AuthenticationPrincipal User currentUser,
                              @RequestParam("avatar") MultipartFile file) throws IOException {
         return userService.uploadAvatar(currentUser.getId(), file);
     }

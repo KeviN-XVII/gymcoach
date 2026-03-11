@@ -1,6 +1,7 @@
 package com.gymcoach.gymcoach.controllers;
 
 import com.gymcoach.gymcoach.dto.UserProfileDTO;
+import com.gymcoach.gymcoach.dto.UserProfileResponseDTO;
 import com.gymcoach.gymcoach.entities.User;
 import com.gymcoach.gymcoach.entities.UserProfile;
 import com.gymcoach.gymcoach.exceptions.ValidationException;
@@ -28,14 +29,14 @@ public class UserProfileController {
     // GET PROFILO UTENTE
     @GetMapping("/me/profile")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public UserProfile getMyProfile(@AuthenticationPrincipal User currentUser) {
+    public UserProfileResponseDTO getMyProfile(@AuthenticationPrincipal User currentUser) {
         return userProfileService.findByUserId(currentUser.getId());
     }
 
     // PUT AGGIORNA PROFILO
     @PutMapping("/me/profile")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public UserProfile updateMyProfile(@AuthenticationPrincipal User currentUser,
+    public UserProfileResponseDTO updateMyProfile(@AuthenticationPrincipal User currentUser,
                                        @RequestBody @Validated UserProfileDTO payload,
                                        BindingResult validationResult) {
         if (validationResult.hasErrors()) {

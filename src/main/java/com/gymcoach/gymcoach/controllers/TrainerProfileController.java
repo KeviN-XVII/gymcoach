@@ -1,5 +1,6 @@
 package com.gymcoach.gymcoach.controllers;
 import com.gymcoach.gymcoach.dto.TrainerProfileDTO;
+import com.gymcoach.gymcoach.dto.TrainerProfileResponseDTO;
 import com.gymcoach.gymcoach.entities.TrainerProfile;
 import com.gymcoach.gymcoach.entities.User;
 import com.gymcoach.gymcoach.exceptions.ValidationException;
@@ -28,7 +29,7 @@ public class TrainerProfileController {
 
     // GET TRAINER CON PAGINAZIONE
     @GetMapping
-    public Page<TrainerProfile> getAllTrainers(
+    public Page<TrainerProfileResponseDTO> getAllTrainers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String orderBy,
@@ -38,21 +39,21 @@ public class TrainerProfileController {
 
     // GET TRAINER PER ID (pubblica)
     @GetMapping("/{id}")
-    public TrainerProfile getTrainerById(@PathVariable UUID id) {
+    public TrainerProfileResponseDTO getTrainerById(@PathVariable UUID id) {
         return trainerProfileService.findById(id);
     }
 
     // GET PROFILO TRAINER
     @GetMapping("/me/profile")
     @PreAuthorize("hasAuthority('ROLE_TRAINER')")
-    public TrainerProfile getMyProfile(@AuthenticationPrincipal User currentUser) {
-        return trainerProfileService.findByUserId(currentUser.getId());
+    public TrainerProfileResponseDTO getMyProfile(@AuthenticationPrincipal User currentUser) {
+        return trainerProfileService.findByUserIdAsDTO(currentUser.getId());
     }
 
     // PUT AGGIORNA PROFILO TRAINER
     @PutMapping("/me/profile")
     @PreAuthorize("hasAuthority('ROLE_TRAINER')")
-    public TrainerProfile updateMyProfile(@AuthenticationPrincipal User currentUser,
+    public TrainerProfileResponseDTO updateMyProfile(@AuthenticationPrincipal User currentUser,
                                           @RequestBody @Validated TrainerProfileDTO payload,
                                           BindingResult validationResult) {
         if (validationResult.hasErrors()) {

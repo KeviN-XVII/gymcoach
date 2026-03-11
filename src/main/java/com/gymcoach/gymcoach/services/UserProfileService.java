@@ -1,5 +1,6 @@
 package com.gymcoach.gymcoach.services;
 import com.gymcoach.gymcoach.dto.UserProfileDTO;
+import com.gymcoach.gymcoach.dto.UserProfileResponseDTO;
 import com.gymcoach.gymcoach.entities.UserProfile;
 import com.gymcoach.gymcoach.exceptions.NotFoundException;
 import com.gymcoach.gymcoach.repositories.UserProfileRepository;
@@ -20,15 +21,25 @@ public class UserProfileService {
         this.userProfileRepository = userProfileRepository;
     }
 
-    public UserProfile findByUserId(UUID userId) {
-        return this.userProfileRepository.findByUserId(userId)
-                .orElseThrow(() -> new NotFoundException("Profilo utente non trovato!"));
+    // CONVERSIONE
+    private UserProfileResponseDTO toResponseDTO(UserProfile p) {
+        return new UserProfileResponseDTO(
+                p.getId(), p.getWeightKg(), p.getHeightCm(),
+                p.getAge(), p.getGender(), p.getGoal(),
+                p.getLevel(), p.getWeeklyFrequency()
+        );
     }
 
-    // AGGIORNA PROFILO
-    public UserProfile updateProfile(UUID userId, UserProfileDTO payload) {
-        UserProfile userProfile = this.findByUserId(userId);
-        // AGGIORNA
+    public UserProfileResponseDTO findByUserId(UUID userId) {
+        UserProfile profile = this.userProfileRepository.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("Profilo utente non trovato!"));
+        return toResponseDTO(profile);
+    }
+
+    public UserProfileResponseDTO updateProfile(UUID userId, UserProfileDTO payload) {
+        UserProfile userProfile = this.userProfileRepository.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("Profilo utente non trovato!"));
+
         userProfile.setWeightKg(payload.weightKg());
         userProfile.setHeightCm(payload.heightCm());
         userProfile.setAge(payload.age());
@@ -36,9 +47,9 @@ public class UserProfileService {
         userProfile.setGoal(payload.goal());
         userProfile.setLevel(payload.level());
         userProfile.setWeeklyFrequency(payload.weeklyFrequency());
-        // SALVO
+
         UserProfile updatedProfile = this.userProfileRepository.save(userProfile);
         log.info("Profilo utente aggiornato con successo");
-        return updatedProfile;
+        return toResponseDTO(updatedProfile);
     }
 }
