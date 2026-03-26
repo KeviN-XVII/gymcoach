@@ -112,12 +112,20 @@ public class PurchaseService {
         }
 
         if ("checkout.session.completed".equals(event.getType())) {
-            Session session = (Session) event.getDataObjectDeserializer()
-                    .getObject()
-                    .orElseThrow(() -> new RuntimeException("Errore deserializzazione evento Stripe"));
 
-            Purchase purchase = purchaseRepository.findByStripeSessionId(session.getId())
-                    .orElseThrow(() -> new NotFoundException("Acquisto non trovato per la sessione: " + session.getId()));
+            Session session = (Session) event
+                    .getData()
+                    .getObject();
+
+            if (session == null) {
+                throw new RuntimeException("Session Stripe null");
+            }
+
+            Purchase purchase = purchaseRepository
+                    .findByStripeSessionId(session.getId())
+                    .orElseThrow(() -> new NotFoundException(
+                            "Acquisto non trovato per la sessione: " + session.getId()
+                    ));
 
             purchase.setStatus(PurchaseStatus.COMPLETED);
             purchase.setStripePaymentIntent(session.getPaymentIntent());

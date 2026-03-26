@@ -31,9 +31,12 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(request -> request
                 .requestMatchers(
                         "/auth/**",
+                        "/trainers",
+                        "/trainers/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html",
-                        "/v3/api-docs/**"
+                        "/v3/api-docs/**",
+                        "/purchases/webhook"
                 ).permitAll()
                 .anyRequest().authenticated()
         );
